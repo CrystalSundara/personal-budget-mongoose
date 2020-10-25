@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- This is an SEO Change -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- This is an SEO Change -->
+    <meta
+        name="description"           
+        content="A personal budget website created for a UNCC ITIS 5166 assignment">
+    
+    <!-- This is an SEO Change -->
+    <!-- This is an A11y Change -->
+    <title>Personal Budget - Home</title>
+    
+    <!-- This is an SEO Change -->
+    <link rel="canonical" href="http://67.205.189.103/pb/" />
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="d3.css">
+</head>
+<body>
+
+    <!-- This is an A11y Change -->
+    <a class="skip-main" href="#maincontent">Skip to main content</a>
+  
+    <!-- This is an A11y Change -->
+    <!-- This is a Semantic HTML Change -->
+    <header role="banner">
+        <!-- This is a Semantic HTML Change -->
+        <!-- This is an A11y Change -->
+        <nav role="navigation" aria-label="Main navigation" class="l1">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="login.html">Login</a></li>
+                <!-- This is an A11y Change -->
+                <li><a href="https://google.com" target="_blank" rel="noopener" aria-label="Open Google in another tab">Google</a></li>
+            </ul>
+        </nav>
+
+        <div class="hero" id="maincontent" tabindex="-1">
+            <h1>Personal Budget</h1>
+            <h2>A personal-budget management app</h2>
+        </div>
+    </header>
+
+    <!-- This is an A11y Change -->
+    <!-- This is a Semantic HTML Change -->
+    <main role="main" class="container center">
+
+        <!-- This is a Semantic HTML Change -->
+        <section class="page-area">
+
+            <!-- This is a Semantic HTML Change -->
+            <article>
+                <!-- This is an A11y Change -->
+                <h3>Stay on track</h3>
+                <p>
+                    Do you know where you are spending your money? If you really stop to track it down,
+                    you would get surprised! Proper budget management depends on real data... and this
+                    app will help you with that!
+                </p>
+            </article>
+    
+            <article>
+                <h3>Alerts</h3>
+                <p>
+                    What if your clothing budget ended? You will get an alert. The goal is to never go over the budget.
+                </p>
+            </article>
+    
+            <article>
+                <h3>Results</h3>
+                <p>
+                    People who stick to a financial plan, budgeting every expense, get out of debt faster!
+                    Also, they to live happier lives... since they expend without guilt or fear... 
+                    because they know it is all good and accounted for.
+                </p>
+            </article>
+    
+            <article>
+                <h3>Free</h3>
+                <p>
+                    This app is free!!! And you are the only one holding your data!
+                </p>
+            </article>
+    
+            <article>
+                <h3>Stay on track</h3>
+                <p>
+                    Do you know where you are spending your money? If you really stop to track it down,
+                    you would get surprised! Proper budget management depends on real data... and this
+                    app will help you with that!
+                </p>
+            </article>
+    
+            <article>
+                <h3>Alerts</h3>
+                <p>
+                    What if your clothing budget ended? You will get an alert. The goal is to never go over the budget.
+                </p>
+            </article>
+    
+            <article>
+                <h3>Results</h3>
+                <p>
+                    People who stick to a financial plan, budgeting every expense, get out of debt faster!
+                    Also, they to live happier lives... since they expend without guilt or fear... 
+                    because they know it is all good and accounted for.
+                </p>
+            </article>
+    
+            <article>
+                <h3>Free</h3>
+                <p>
+                    <canvas id="myChart" width="400" height="400"></canvas>>
+                </p>
+            </article>
+
+        </section>
+        <section class="donut">
+            <h2>Budget chart donutified</h2>
+            <div id="d3Chart"></div>
+        </section>  
+
+    </main>
+
+    <!-- This is an A11y Change -->
+    <!-- This is a Semantic HTML Change -->
+    <footer role="contentinfo">
+        <div class="center">
+            All rights reserved &copy; Crystal Sundaramoorthy
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="d3donut.js"></script>
+
+    <script>
+        var dataSource = {
+            datasets: [
+                {
+                    data: [],
+                    backgroundColor: [
+                    '#790149',
+                    '#005Fcc',
+                    '#00EBC1',
+                    '#A700FC',
+                    '#FF6E3A',
+                    '#FFDC3D',
+                    '#00B408',
+                    '#003D30'
+                    ],
+                }
+            ],
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: []
+        };
+
+        function createChart() {
+            var ctx = document.getElementById("myChart").getContext("2d");
+            var myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: dataSource
+            });
+        }
+
+        function getBudget() {
+            axios.get('/budget')
+            .then(function (res) {
+                //console.log(res.data);
+                for (var i = 0; i < res.data.length; i++){
+                    dataSource.datasets[0].data[i] = res.data[i].budget;
+                    dataSource.labels[i] = res.data[i].title;
+                }
+                createChart();
+            });
+        }
+
+        getBudget();
+    </script>
+
+</body>
+</html>
