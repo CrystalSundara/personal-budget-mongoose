@@ -10,7 +10,7 @@ app.get('/hello', (req, res) => {
 });
 
 app.get('/budget', (req, res) => {
-    const budget = JSON.parse(fs.readFileSync('myBudget.json', 'utf8'));
+    const budget = JSON.parse(fs.readFileSync('myBudget-withColors.json', 'utf8'));
     res.json(budget);
 });
 

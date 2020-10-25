@@ -1,6 +1,7 @@
 var dSource = {
     labels: [],
-    values: []
+    values: [],
+    colors: []
 };
 
 function getBudget() {
@@ -9,6 +10,7 @@ function getBudget() {
         //console.log(res.data);
     for (var i = 0; i < res.data.length; i++){
         dSource.values[i] = res.data[i].budget;
+        dSource.colors[i] = res.data[i].color;
         dSource.labels[i] = res.data[i].title;
     };
 
@@ -52,14 +54,7 @@ var key = function(d){ return d.data.label; };
 
 var color = d3.scale.ordinal()
 .domain(dSource.labels)
-.range(['#790149',
-        '#005Fcc',
-        '#00EBC1',
-        '#A700FC',
-        '#FF6E3A',
-        '#FFDC3D',
-        '#00B408',
-        '#003D30',]);
+.range(dSource.colors);
 
 function randomData (){
 var labels = color.domain();

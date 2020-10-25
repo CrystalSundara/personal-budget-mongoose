@@ -145,16 +145,7 @@
             datasets: [
                 {
                     data: [],
-                    backgroundColor: [
-                    '#790149',
-                    '#005Fcc',
-                    '#00EBC1',
-                    '#A700FC',
-                    '#FF6E3A',
-                    '#FFDC3D',
-                    '#00B408',
-                    '#003D30'
-                    ],
+                    backgroundColor: [],
                 }
             ],
             // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -175,6 +166,7 @@
                 //console.log(res.data);
                 for (var i = 0; i < res.data.length; i++){
                     dataSource.datasets[0].data[i] = res.data[i].budget;
+                    dataSource.datasets[0].backgroundColor[i] = res.data[i].color;
                     dataSource.labels[i] = res.data[i].title;
                 }
                 createChart();
