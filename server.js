@@ -13,32 +13,51 @@ app.get('/hello', (req, res) => {
     res.send('Hello World!');
 });
 
-app.get('/budget', (req, res) => {
-    const budget = JSON.parse(fs.readFileSync('myBudget-withColors.json', 'utf8'));
-    res.json(budget);
-});
-
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });
 
-
-
-
-
-
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+app.get('/budget', (req, res) => {
+    mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
         .then(()=> {
-            console.log("Connected to the database")
-            // List all entries
-            // chartDataModel.find({})
-            //             .then((data)=>{
-            //                 console.log(data)
-            //                 mongoose.connection.close()
-            //             })
-            //             .catch((connectionError)=>{
-            //                 console.log(connectionError)
-            //             })
+            // console.log("Connected to the database")
+            chartDataModel.find({})
+                        .then((data)=>{
+                            res.json(data);
+                            // console.log("Data within DB connection", data)
+                            mongoose.connection.close()
+                        })
+                        .catch((connectionError)=>{
+                            res.send(connectionError)
+                            // console.log(connectionError)
+                        })
+        })
+        .catch((connectionError) => {
+            res.send(connectionError)
+            // console.log(connectionError)
+        });
+});
+
+
+
+
+
+
+
+
+
+// mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+//         .then(()=> {
+//             console.log("Connected to the database")
+//             List all entries
+//             chartDataModel.find({})
+//                         .then((data)=>{
+//                             console.log(data)
+//                             mongoose.connection.close()
+//                         })
+//                         .catch((connectionError)=>{
+//                             console.log(connectionError)
+//                         })
             
             // // Fetch one document
             // chartDataModel.find({title: "Eat out"})
@@ -83,16 +102,16 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
             //             })       
             
             // Delete data
-            chartDataModel.remove({color: "#000000"})
-                        .then((data)=>{
-                            console.log(data)
-                            mongoose.connection.close()
-                        })
-                        .catch((connectionError)=>{
-                            console.log(connectionError)
-                        })     
+            // chartDataModel.remove({color: "#000000"})
+            //             .then((data)=>{
+            //                 console.log(data)
+            //                 mongoose.connection.close()
+            //             })
+            //             .catch((connectionError)=>{
+            //                 console.log(connectionError)
+            //             })     
 
-        })
-        .catch((connectionError) => {
-            console.log(connectionError)
-        })
+        // })
+        // .catch((connectionError) => {
+        //     console.log(connectionError)
+        // })
